@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeMap: Beneath the Surface of History</title>
+    <style>
+        /* CSS: Making it look clean and modern */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* Dark background for a professional look */
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 { margin-bottom: 10px; color: #4CAF50; }
+        p { max-width: 700px; line-height: 1.6; text-align: center; }
+
+        /* The Map Container */
+        .map-container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            margin: 30px 0;
+            border: 4px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* The Images */
+        .map-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 800px;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Layer 1: The "Hidden" Past (Underneath) */
+        .past-layer {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Lower_Manhattan_skyline_1931.jpg');
+        }
+
+        /* Layer 2: The Modern Surface (On top) */
+        .modern-layer {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_cropped.jpg');
+            width: 50%; /* This width changes with the slider */
+            border-right: 4px solid #4CAF50; /* A green line showing where we are "cutting" the map */
+            z-index: 2;
+        }
+
+        /* The Slider Component */
+        .slider-wrapper { width: 800px; }
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #4CAF50;
+        }
+
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            width: 800px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .info-box {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-width: 700px;
+            border-left: 5px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>TimeMap</h1>
+    <p>For the Senior Pathway, I explored the idea that <b>Time</b> is a layer. What we see today is just the "Surface." Beneath it lies the history of our cities.</p>
+
+    <!-- The Map Visualization -->
+    <div class="map-container">
+        <div class="map-image past-layer"></div>
+        <div id="modern-surface" class="map-image modern-layer"></div>
+    </div>
+
+    <!-- The Control Slider -->
+    <div class="slider-wrapper">
+        <input type="range" min="0" max="100" value="50" oninput="revealHistory(this.value)">
+    </div>
+
+    <div class="labels">
+        <span>⬅ THE PAST (1930s)</span>
+        <span>MODERN SURFACE (TODAY) ➡</span>
+    </div>
+
+    <!-- Technical Project Explanation for Judges -->
+    <div class="info-box">
+        <h3>Senior Pathway Interpretation:</h3>
+        <p>This project uses <b>precision CSS layering</b> and <b>real-time DOM manipulation</b>. It solves the problem of "historical blindness" by allowing users to physically peel back the modern surface to expose the hidden architecture of the past. By comparing New York in 1931 to today, we see how the city grew "over" its history.</p>
+    </div>
+
+    <script>
+        // JavaScript Logic: Simple but Effective
+        function revealHistory(sliderValue) {
+            // We select the "Modern" div and change its width based on the slider
+            const surface = document.getElementById('modern-surface');
+            surface.style.width = sliderValue + "%";
+        }
+    </script>
+
+</body>
+</html>
