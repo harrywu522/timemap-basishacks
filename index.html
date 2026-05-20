@@ -3,119 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeMap: Beneath the Surface of History</title>
+    <title>TimeMap: Shanghai's Hidden History</title>
     <style>
-        /* CSS: Making it look clean and modern */
+        /* PROFESSIONAL STYLING (SENIOR PATHWAY) */
+        :root {
+            --primary-green: #4CAF50;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212; /* Dark background for a professional look */
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-bg);
             color: #ffffff;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
-        h1 { margin-bottom: 10px; color: #4CAF50; }
-        p { max-width: 700px; line-height: 1.6; text-align: center; }
+        .header {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
 
-        /* The Map Container */
-        .map-container {
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* THE MAP VISUALIZATION ENGINE */
+        .comparison-container {
             position: relative;
-            width: 800px;
-            height: 500px;
-            margin: 30px 0;
-            border: 4px solid #333;
-            border-radius: 8px;
+            width: 900px;
+            height: 550px;
+            border: 6px solid #333;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
         }
 
-        /* The Images */
-        .map-image {
+        .map-layer {
             position: absolute;
             top: 0;
             left: 0;
-            width: 800px;
-            height: 500px;
+            width: 900px;
+            height: 550px;
             background-size: cover;
             background-position: center;
         }
 
-        /* Layer 1: The "Hidden" Past (Underneath) */
+        /* LAYER 1: THE HIDDEN PAST (BOTTOM) */
         .past-layer {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Lower_Manhattan_skyline_1931.jpg');
+            background-image: url('past.jpg');
+            z-index: 1;
         }
 
-        /* Layer 2: The Modern Surface (On top) */
+        /* LAYER 2: THE MODERN SURFACE (TOP) */
         .modern-layer {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_cropped.jpg');
-            width: 50%; /* This width changes with the slider */
-            border-right: 4px solid #4CAF50; /* A green line showing where we are "cutting" the map */
+            background-image: url('modern.jpg');
+            width: 50%; /* Default starting position */
             z-index: 2;
+            border-right: 5px solid var(--primary-green);
+            box-shadow: 10px 0 15px rgba(0,0,0,0.5);
         }
 
-        /* The Slider Component */
-        .slider-wrapper { width: 800px; }
+        /* THE UI CONTROLS */
+        .controls {
+            width: 900px;
+            margin-top: 30px;
+        }
+
         input[type="range"] {
+            -webkit-appearance: none;
             width: 100%;
-            cursor: pointer;
-            accent-color: #4CAF50;
+            height: 15px;
+            background: #333;
+            border-radius: 10px;
+            outline: none;
+            cursor: ew-resize;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            border: 3px solid white;
         }
 
         .labels {
             display: flex;
             justify-content: space-between;
-            width: 800px;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            color: #aaa;
         }
 
-        .info-box {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            max-width: 700px;
-            border-left: 5px solid #4CAF50;
+        /* JUDGING INFO BOX */
+        .judging-panel {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+            max-width: 850px;
+            border-top: 4px solid var(--primary-green);
+        }
+
+        .tech-badge {
+            background: var(--primary-green);
+            color: black;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 950px) {
+            .comparison-container, .controls, .labels { width: 95vw; height: 300px; }
+            .map-layer { width: 95vw; height: 300px; }
         }
     </style>
 </head>
 <body>
 
-    <h1>TimeMap</h1>
-    <p>For the Senior Pathway, I explored the idea that <b>Time</b> is a layer. What we see today is just the "Surface." Beneath it lies the history of our cities.</p>
-
-    <!-- The Map Visualization -->
-    <div class="map-container">
-        <div class="map-image past-layer"></div>
-        <div id="modern-surface" class="map-image modern-layer"></div>
+    <div class="header">
+        <h1>TimeMap: Shanghai</h1>
+        <p>Exploring the temporal layers of the Pudong skyline. Beneath the surface of the world's most futuristic city lies a history of rapid transformation.</p>
     </div>
 
-    <!-- The Control Slider -->
-    <div class="slider-wrapper">
-        <input type="range" min="0" max="100" value="50" oninput="revealHistory(this.value)">
+    <!-- MAIN PROJECT STAGE -->
+    <div class="comparison-container">
+        <!-- The "Hidden" image is at the bottom -->
+        <div class="map-layer past-layer"></div>
+        <!-- The "Surface" image is on top, width is adjusted by slider -->
+        <div id="surfaceLayer" class="map-layer modern-layer"></div>
     </div>
 
-    <div class="labels">
-        <span>⬅ THE PAST (1930s)</span>
-        <span>MODERN SURFACE (TODAY) ➡</span>
+    <div class="controls">
+        <input type="range" min="0" max="100" value="50" oninput="updateReveal(this.value)">
+        <div class="labels">
+            <span>🕰️ THE PAST (1930s)</span>
+            <span>TODAY (2026) 🏙️</span>
+        </div>
     </div>
 
-    <!-- Technical Project Explanation for Judges -->
-    <div class="info-box">
-        <h3>Senior Pathway Interpretation:</h3>
-        <p>This project uses <b>precision CSS layering</b> and <b>real-time DOM manipulation</b>. It solves the problem of "historical blindness" by allowing users to physically peel back the modern surface to expose the hidden architecture of the past. By comparing New York in 1931 to today, we see how the city grew "over" its history.</p>
+    <!-- SENIOR PATHWAY DOCUMENTATION -->
+    <div class="judging-panel">
+        <h3><span class="tech-badge">SENIOR PATHWAY</span> Project Documentation</h3>
+        <p><b>Theme Interpretation:</b> This project interprets "Beneath the Surface" through a temporal lens. It posits that the "surface" we experience today is merely the latest iteration of a site's history. By peeling back the modern pixel-layer, the user discovers the hidden physical history of Shanghai.</p>
+        <p><b>Technical Depth:</b> The project utilizes <b>Real-time DOM manipulation</b>. A JavaScript event listener monitors the range input and dynamically recalculates the width of the top container. High-precision CSS positioning ensures that the background assets align perfectly across layers.</p>
     </div>
 
     <script>
-        // JavaScript Logic: Simple but Effective
-        function revealHistory(sliderValue) {
-            // We select the "Modern" div and change its width based on the slider
-            const surface = document.getElementById('modern-surface');
-            surface.style.width = sliderValue + "%";
+        /**
+         * THE LOGIC: 
+         * This function captures the slider value (0-100) 
+         * and applies it to the modern layer's width style.
+         */
+        function updateReveal(value) {
+            const surface = document.getElementById('surfaceLayer');
+            surface.style.width = value + "%";
         }
     </script>
 
