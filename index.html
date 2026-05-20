@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--dark-bg);
             color: #ffffff;
             margin: 0;
@@ -34,68 +34,54 @@
             margin-bottom: 10px;
             color: var(--primary-green);
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
         /* THE MAP VISUALIZATION ENGINE */
         .comparison-container {
             position: relative;
-            width: 900px;
-            height: 550px;
+            width: 800px;
+            height: 500px;
             border: 6px solid #333;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            background-color: #222; /* Fallback color */
         }
 
         .map-layer {
             position: absolute;
             top: 0;
             left: 0;
-            width: 900px;
-            height: 550px;
+            width: 800px;
+            height: 500px;
             background-size: cover;
             background-position: center;
         }
 
-        /* LAYER 1: THE HIDDEN PAST (BOTTOM) */
+        /* LAYER 1: THE HIDDEN PAST (Uses your uploaded file) */
         .past-layer {
             background-image: url('past.jpg');
             z-index: 1;
         }
 
-        /* LAYER 2: THE MODERN SURFACE (TOP) */
+        /* LAYER 2: THE MODERN SURFACE (Uses your uploaded file) */
         .modern-layer {
             background-image: url('modern.jpg');
-            width: 50%; /* Default starting position */
+            width: 50%; /* Starting position */
             z-index: 2;
             border-right: 5px solid var(--primary-green);
-            box-shadow: 10px 0 15px rgba(0,0,0,0.5);
         }
 
         /* THE UI CONTROLS */
         .controls {
-            width: 900px;
+            width: 800px;
             margin-top: 30px;
         }
 
         input[type="range"] {
-            -webkit-appearance: none;
             width: 100%;
             height: 15px;
-            background: #333;
-            border-radius: 10px;
-            outline: none;
             cursor: ew-resize;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 30px;
-            height: 30px;
-            background: var(--primary-green);
-            border-radius: 50%;
-            border: 3px solid white;
+            accent-color: var(--primary-green);
         }
 
         .labels {
@@ -103,7 +89,6 @@
             justify-content: space-between;
             margin-top: 15px;
             font-weight: bold;
-            font-size: 1.1rem;
             color: #aaa;
         }
 
@@ -113,23 +98,8 @@
             padding: 25px;
             border-radius: 15px;
             margin-top: 40px;
-            max-width: 850px;
+            max-width: 800px;
             border-top: 4px solid var(--primary-green);
-        }
-
-        .tech-badge {
-            background: var(--primary-green);
-            color: black;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        @media (max-width: 950px) {
-            .comparison-container, .controls, .labels { width: 95vw; height: 300px; }
-            .map-layer { width: 95vw; height: 300px; }
         }
     </style>
 </head>
@@ -137,14 +107,14 @@
 
     <div class="header">
         <h1>TimeMap: Shanghai</h1>
-        <p>Exploring the temporal layers of the Pudong skyline. Beneath the surface of the world's most futuristic city lies a history of rapid transformation.</p>
+        <p>Beneath the surface of the modern Shanghai skyline lies a history of rapid transformation. Move the slider to travel through time.</p>
     </div>
 
     <!-- MAIN PROJECT STAGE -->
     <div class="comparison-container">
-        <!-- The "Hidden" image is at the bottom -->
+        <!-- Hidden Image -->
         <div class="map-layer past-layer"></div>
-        <!-- The "Surface" image is on top, width is adjusted by slider -->
+        <!-- Surface Image -->
         <div id="surfaceLayer" class="map-layer modern-layer"></div>
     </div>
 
@@ -156,22 +126,16 @@
         </div>
     </div>
 
-    <!-- SENIOR PATHWAY DOCUMENTATION -->
+    <!-- DOCUMENTATION FOR JUDGES -->
     <div class="judging-panel">
-        <h3><span class="tech-badge">SENIOR PATHWAY</span> Project Documentation</h3>
-        <p><b>Theme Interpretation:</b> This project interprets "Beneath the Surface" through a temporal lens. It posits that the "surface" we experience today is merely the latest iteration of a site's history. By peeling back the modern pixel-layer, the user discovers the hidden physical history of Shanghai.</p>
-        <p><b>Technical Depth:</b> The project utilizes <b>Real-time DOM manipulation</b>. A JavaScript event listener monitors the range input and dynamically recalculates the width of the top container. High-precision CSS positioning ensures that the background assets align perfectly across layers.</p>
+        <h3>Senior Pathway Documentation</h3>
+        <p><b>Theme Interpretation:</b> This project explores "Beneath the Surface" as a temporal concept. By using <b>Real-time DOM manipulation</b>, the user can peel back the modern pixel-layer to discover the hidden physical history of Shanghai. This shows that the present is just the top layer of a deep historical stack.</p>
     </div>
 
     <script>
-        /**
-         * THE LOGIC: 
-         * This function captures the slider value (0-100) 
-         * and applies it to the modern layer's width style.
-         */
         function updateReveal(value) {
-            const surface = document.getElementById('surfaceLayer');
-            surface.style.width = value + "%";
+            // This adjusts the width of the top image based on the slider value
+            document.getElementById('surfaceLayer').style.width = value + "%";
         }
     </script>
 
