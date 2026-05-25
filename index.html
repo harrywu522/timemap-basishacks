@@ -1,119 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeMap: 7 Cities Beneath the Surface</title>
-    <style>
-        :root { --primary: #4CAF50; --bg: #121212; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .header { text-align: center; margin-bottom: 20px; }
-        h1 { color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
-        #location-title { font-size: 1.5rem; color: #aaa; margin-top: 5px; }
-
-        .app-container { display: flex; align-items: center; gap: 25px; margin-top: 20px; }
-
-        .map-frame {
-            position: relative;
-            width: 800px;
-            height: 500px;
-            border: 5px solid #333;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .map-layer { position: absolute; width: 800px; height: 500px; background-size: cover; background-position: center; }
-        #pastLayer { z-index: 1; }
-        #modernLayer { z-index: 2; width: 50%; border-right: 5px solid var(--primary); }
-
-        .next-btn {
-            background: #333;
-            color: white;
-            border: none;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .next-btn:hover { background: var(--primary); transform: scale(1.1); }
-
-        .controls { width: 800px; margin-top: 30px; }
-        input[type="range"] { width: 100%; accent-color: var(--primary); cursor: ew-resize; }
-        .labels { display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold; color: #777; }
-
-        .judging-panel { background: #1e1e1e; padding: 25px; border-radius: 12px; margin-top: 40px; max-width: 800px; border-top: 4px solid var(--primary); }
-    </style>
+    <title>TimeMap: Global Evolution</title>
+    <!-- Link to our external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="header">
-        <h1>TimeMap: Global Evolution</h1>
-        <div id="location-title">Loading...</div>
+        <h1>TimeMap</h1>
+        <h2 id="location-name">Loading City...</h2>
     </div>
 
-    <div class="app-container">
-        <div class="map-frame">
-            <div id="pastLayer" class="map-layer"></div>
-            <div id="modernLayer" class="map-layer"></div>
+    <div class="main-display">
+        <!-- Left Button -->
+        <button class="nav-button" onclick="moveBack()">⬅</button>
+
+        <!-- The Map Viewing Area -->
+        <div class="map-container">
+            <div id="past-layer" class="layer"></div>
+            <div id="modern-layer" class="layer"></div>
         </div>
-        <button class="next-btn" title="Next Location" onclick="nextCity()">➔</button>
+
+        <!-- Right Button -->
+        <button class="nav-button" onclick="moveForward()">➡</button>
     </div>
 
-    <div class="controls">
-        <input type="range" min="0" max="100" value="50" oninput="reveal(this.value)">
+    <div class="ui-controls">
+        <!-- Slider to reveal the hidden layer -->
+        <input type="range" id="slider" min="0" max="100" value="50" oninput="revealLayer()">
+        
         <div class="labels">
-            <span id="label-past">PAST</span>
-            <span id="label-modern">PRESENT (2026)</span>
+            <span id="past-year">PAST</span>
+            <span>PRESENT (2026)</span>
         </div>
     </div>
 
-    <div class="judging-panel">
-        <h3>Senior Pathway: Temporal Depth Analysis</h3>
-        <p>This project uses a <b>state-driven navigation system</b> to cycle through 7 global locations. By visualizing the "hidden" history beneath the modern surface, the app demonstrates how rapid urbanization has layered over our physical past.</p>
-    </div>
-
-    <script>
-        // UPDATED LIST: Exactly 7 Cities
-        const cities = [
-            { name: "1. Shanghai, China", past: "1930" },
-            { name: "2. New York, USA", past: "1920" },
-            { name: "3. Dubai, UAE", past: "1990" },
-            { name: "4. Hong Kong, China", past: "1960" },
-            { name: "5. London, UK", past: "1920" },
-            { name: "6. Singapore", past: "1970" },
-            { name: "7. Tokyo, Japan", past: "1950" }
-        ];
-
-        let currentIndex = 0;
-
-        function updateDisplay() {
-            const city = cities[currentIndex];
-            document.getElementById('location-title').innerText = city.name;
-            document.getElementById('label-past').innerText = "PAST (" + city.past + ")";
-            
-            // Set the background images to match your files
-            document.getElementById('pastLayer').style.backgroundImage = "url('past" + currentIndex + ".jpg')";
-            document.getElementById('modernLayer').style.backgroundImage = "url('modern" + currentIndex + ".jpg')";
-        }
-
-        function nextCity() {
-            currentIndex = (currentIndex + 1) % cities.length; 
-            updateDisplay();
-        }
-
-        function reveal(val) {
-            document.getElementById('modernLayer').style.width = val + "%";
-        }
-
-        // Initialize
-        updateDisplay();
-    </script>
+    <!-- Link to our external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
