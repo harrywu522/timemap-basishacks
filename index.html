@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeMap: 10 Cities Through Time</title>
+    <title>TimeMap: 7 Cities Beneath the Surface</title>
     <style>
         :root { --primary: #4CAF50; --bg: #121212; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        
         .header { text-align: center; margin-bottom: 20px; }
-        h1 { color: var(--primary); margin: 0; }
+        h1 { color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
         #location-title { font-size: 1.5rem; color: #aaa; margin-top: 5px; }
 
-        /* MAIN APP LAYOUT */
-        .app-container { display: flex; align-items: center; gap: 20px; }
+        .app-container { display: flex; align-items: center; gap: 25px; margin-top: 20px; }
 
         .map-frame {
             position: relative;
@@ -22,99 +20,91 @@
             border: 5px solid #333;
             border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .map-layer { position: absolute; width: 800px; height: 500px; background-size: cover; background-position: center; transition: background-image 0.3s ease-in-out; }
+        .map-layer { position: absolute; width: 800px; height: 500px; background-size: cover; background-position: center; }
         #pastLayer { z-index: 1; }
         #modernLayer { z-index: 2; width: 50%; border-right: 5px solid var(--primary); }
 
-        /* NEXT BUTTON */
         .next-btn {
             background: #333;
             color: white;
             border: none;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .next-btn:hover { background: var(--primary); transform: scale(1.1); }
 
-        /* CONTROLS */
-        .controls { width: 800px; margin-top: 20px; }
-        input[type="range"] { width: 100%; accent-color: var(--primary); }
-        .labels { display: flex; justify-content: space-between; margin-top: 10px; color: #888; }
+        .controls { width: 800px; margin-top: 30px; }
+        input[type="range"] { width: 100%; accent-color: var(--primary); cursor: ew-resize; }
+        .labels { display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold; color: #777; }
 
-        .judging-panel { background: #1e1e1e; padding: 20px; border-radius: 10px; margin-top: 30px; max-width: 800px; border-top: 4px solid var(--primary); }
+        .judging-panel { background: #1e1e1e; padding: 25px; border-radius: 12px; margin-top: 40px; max-width: 800px; border-top: 4px solid var(--primary); }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>TimeMap: Global Evolution</h1>
-        <div id="location-title">1. Shanghai, China</div>
+        <div id="location-title">Loading...</div>
     </div>
 
     <div class="app-container">
-        <!-- The Map Area -->
         <div class="map-frame">
             <div id="pastLayer" class="map-layer"></div>
             <div id="modernLayer" class="map-layer"></div>
         </div>
-
-        <!-- The Next Arrow -->
-        <button class="next-btn" onclick="nextCity()">➔</button>
+        <button class="next-btn" title="Next Location" onclick="nextCity()">➔</button>
     </div>
 
     <div class="controls">
         <input type="range" min="0" max="100" value="50" oninput="reveal(this.value)">
         <div class="labels">
-            <span id="label-past">PAST (1930s)</span>
+            <span id="label-past">PAST</span>
             <span id="label-modern">PRESENT (2026)</span>
         </div>
     </div>
 
     <div class="judging-panel">
-        <h3>Senior Pathway: Array Logic & State Management</h3>
-        <p>This project stores 10 historical datasets in a <b>JavaScript Object Array</b>. Clicking the navigation arrow triggers a state update that re-renders the visual layers without refreshing the page. This demonstrates advanced interactivity and clean data organization.</p>
+        <h3>Senior Pathway: Temporal Depth Analysis</h3>
+        <p>This project uses a <b>state-driven navigation system</b> to cycle through 7 global locations. By visualizing the "hidden" history beneath the modern surface, the app demonstrates how rapid urbanization has layered over our physical past.</p>
     </div>
 
     <script>
-        // DATA FOR 10 PLACES
+        // UPDATED LIST: Exactly 7 Cities
         const cities = [
-            { name: "1. Shanghai, China", past: "1930", modern: "2026" },
-            { name: "2. New York, USA", past: "1920", modern: "2026" },
-            { name: "3. London, UK", past: "1940", modern: "2026" },
-            { name: "4. Tokyo, Japan", past: "1950", modern: "2026" },
-            { name: "5. Dubai, UAE", past: "1980", modern: "2026" },
-            { name: "6. Hong Kong, China", past: "1960", modern: "2026" },
-            { name: "7. Paris, France", past: "1900", modern: "2026" },
-            { name: "8. Beijing, China", past: "1950", modern: "2026" },
-            { name: "9. Singapore", past: "1970", modern: "2026" },
-            { name: "10. Sydney, Australia", past: "1930", modern: "2026" }
+            { name: "1. Shanghai, China", past: "1930" },
+            { name: "2. New York, USA", past: "1920" },
+            { name: "3. Dubai, UAE", past: "1990" },
+            { name: "4. Hong Kong, China", past: "1960" },
+            { name: "5. London, UK", past: "1920" },
+            { name: "6. Singapore", past: "1970" },
+            { name: "7. Tokyo, Japan", past: "1950" }
         ];
 
         let currentIndex = 0;
 
         function updateDisplay() {
             const city = cities[currentIndex];
-            // Update Text
             document.getElementById('location-title').innerText = city.name;
             document.getElementById('label-past').innerText = "PAST (" + city.past + ")";
-            document.getElementById('label-modern').innerText = "PRESENT (" + city.modern + ")";
-
-            // Update Images (Uses your past0.jpg, modern0.jpg, etc.)
+            
+            // Set the background images to match your files
             document.getElementById('pastLayer').style.backgroundImage = "url('past" + currentIndex + ".jpg')";
             document.getElementById('modernLayer').style.backgroundImage = "url('modern" + currentIndex + ".jpg')";
         }
 
         function nextCity() {
-            currentIndex = (currentIndex + 1) % cities.length; // Loops back to 0 after 10
+            currentIndex = (currentIndex + 1) % cities.length; 
             updateDisplay();
         }
 
@@ -122,7 +112,7 @@
             document.getElementById('modernLayer').style.width = val + "%";
         }
 
-        // Initialize first city
+        // Initialize
         updateDisplay();
     </script>
 </body>
